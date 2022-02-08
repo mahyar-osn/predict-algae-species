@@ -16,9 +16,28 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 import torch
 
-
 __DEVICE__ = "cuda" if torch.cuda.is_available() else "cpu"
 __PIN_MEMORY__ = True if __DEVICE__ == "cuda" else False
+config = {
+    "ROOT": "../../tests/resources",
+    "IMAGE_DATASET_PATH": "tiles",
+    "MASK_DATASET_PATH": "annotations",
+    "ALGAE_SPECIES": ["Pp", "Cr", "Cv"],
+    "TEST_SPLIT": 0.2,
+    "NUM_CHANNELS": 1,
+    "NUM_CLASSES": 1,
+    "NUM_LEVELS": 3,
+    "INIT_LR": 0.001,
+    "NUM_EPOCHS": 40,
+    "BATCH_SIZE": 16,
+    "INPUT_IMAGE_WIDTH": 512,
+    "INPUT_IMAGE_HEIGHT": 512,
+    "THRESHOLD": 0.5,
+    "PATIENCE": 5,
+    "BASE_OUTPUT": "output",
+    "MODEL_PATH": "unet.ptm",
+    "TEST_PATHS": "test_paths.txt"
+}
 
 
 def get_dataset(strain: str, raw: list, annotation: list):
@@ -28,10 +47,6 @@ def get_dataset(strain: str, raw: list, annotation: list):
 
 
 def main():
-
-    with open("core/config.json", "r") as f:
-        config = json.load(f)
-
     base_output = os.path.join(config["ROOT"], config["BASE_OUTPUT"])
     if not os.path.exists(base_output):
         os.mkdir(base_output)
@@ -60,10 +75,12 @@ def main():
 
     # define some transformations to later use when we load the dataset
     transform = transforms.Compose([transforms.ToPILImage(),
-                                transforms.Resize((config["INPUT_IMAGE_HEIGHT"],
-                                                   config["INPUT_IMAGE_WIDTH"])),
-                                transforms.ToTensor()])
+                                    transforms.Resize((config["INPUT_IMAGE_HEIGHT"],
+                                                       config["INPUT_IMAGE_WIDTH"])),
+                                    transforms.ToTensor()])
 
+    with open('metrics.txt', 'w') as outfile:
+        outfile.write(f'\t Loss output for each algae model:')
     # loop through each strain and create a model and save it into our `output` folder
     for strain in config["ALGAE_SPECIES"]:
         train_image_subset, train_annotation_subset = get_dataset(strain, train_images, train_annotations)
@@ -108,7 +125,7 @@ def main():
 
         early_stopping = EarlyStopping(patience=config["PATIENCE"],
                                        verbose=True,
-                                       path=model_path+'.{}'.format(strain))
+                                       path=model_path + '.{}'.format(strain))
 
         print("[INFO] training the network for {} algae strain...".format(strain))
         start_time = time.time()
@@ -156,6 +173,9 @@ def main():
                 print("Early stopping")
                 break
 
+        with open('metrics.txt', 'a') as outfile:
+            outfile.write(f'\n Mean training loss for {strain} {avg_train_loss}')
+
         end_time = time.time()
         print("[INFO] total time taken to train the model: {:.2f}s".format(end_time - start_time))
 
@@ -169,6 +189,7 @@ def main():
         plt.xlabel("Epochs")
         plt.ylabel("Loss")
         plt.legend(loc="upper right")
+        plt.savefig(f'{strain}_model_results.png', dpi=120)
 
 
 if __name__ == '__main__':
