@@ -1,0 +1,6 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = gdrive://1-iU0YnifGsEuaKwUJbrxJktu0DLn8rFH
+    gdrive_use_service_account = true
+    gdrive_service_account_json_file_path = C:\Users\mosa004\Downloads\elegant-shelter-340705-10860f1140d5.json
