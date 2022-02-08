@@ -1,5 +1,3 @@
-from core import config
-
 from torch.nn import ConvTranspose2d
 from torch.nn import Conv2d
 from torch.nn import MaxPool2d
@@ -92,7 +90,7 @@ class UNet(Module):
     """ Unet model
     """
     def __init__(self, enc_channels=(3, 16, 32, 64), dec_channels=(64, 32, 16), nb_classes=1, retain_dim=True,
-                 out_size=(config.INPUT_IMAGE_HEIGHT, config.INPUT_IMAGE_WIDTH)):
+                 out_size=(None, None)):
         super().__init__()
 
         """ initialize the encoder and decoder """
