@@ -110,11 +110,17 @@ Since our models are now saved in the Google Drive directory, we can simply run 
 
 A simple CI/CD workflow
 ------------
+Here, I added a very simple ``CML`` using ``GitHub Actions``, ``DVC``, and ``Google Cloud Services``. Since we are storing the data and the trained models on a Google Drive folder, in order to make any `pull` or `push` tp that folder, Google will ask for authentication. In order to be able to download the model and test it automatically in CI/CD, ``Google Cloud Services`` was used.
+
+Next, ``Google Cloud Services`` and ``DVC`` were configured so that we can automatically connect our version controlled models/dataset to our Google Drive folder. Using a simple `CML` workflow stored in ``.github/workflows/cml.yaml``, we can trigger an automated CICD each time we update our model or dataset. This is done through the ``GitHub Actions`` pull requests.
+
+Each time the code/dataset are updated and pushed to codebase, our workflow in ``Actions`` is triggered. This results in a full run of installation and training of the model. Upon completion of the training, a text file called ``report.md`` is generated which contains some metrics to evaluate the training. In addition, a command will also be triggered to send an email to notify the user about the model training metrics. Furthermore, loss error plots are saved in the metrics so that the model performance can be evaluated offline.
 
 
 Limitations
 ------------
 
-This is very simple Unet model with a small architecture. As a result, the predictions may not be 100% perfect and there may be mistakes. Additionally, no intricate and complex image-preprocessing and postprocessing have been applied to the images to make them more suitable for a convolutional neural network. To build better and more accurate models, we need i) an appropriate image processing pipeline to preprocess the images; ii) more complex models; iii) some regularisations in the model objective function; and iv) possible more cases to generalise the problem.
+- This is very simple Unet model with a small architecture. As a result, the predictions may not be 100% perfect and there may be mistakes. Additionally, no intricate and complex image-preprocessing and postprocessing have been applied to the images to make them more suitable for a convolutional neural network. To build better and more accurate models, we need i) an appropriate image processing pipeline to preprocess the images; ii) more complex models; iii) some regularisations in the model objective function; and iv) possible more cases to generalise the problem.
 
+- The CI/CD pipeline is by no means a full comprehensive workflow. A complete workflow is much more complex than the one provided here, containing various other components such API wrappers, Docker containers, dynamic configuration files, model packaging systems, container registry, and prediction monitoring. Here I only tried to show a simple proof-of-principle. In addition, the codebase was tested and deployed on a Windows operating system and thus we cannot create Docker containers. This can be simply don on any Linux distribution systems.
 
