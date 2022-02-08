@@ -18,8 +18,11 @@ import torch
 
 __DEVICE__ = "cuda" if torch.cuda.is_available() else "cpu"
 __PIN_MEMORY__ = True if __DEVICE__ == "cuda" else False
+
+current_dir = os.path.dirname(__file__)
+
 config = {
-    "ROOT": "../../tests/resources",
+    "ROOT": current_dir + "/../../tests/resources",
     "IMAGE_DATASET_PATH": "tiles",
     "MASK_DATASET_PATH": "annotations",
     "ALGAE_SPECIES": ["Pp", "Cr", "Cv"],
