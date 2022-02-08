@@ -15,7 +15,7 @@ Requirements
 * `tqdm <https://tqdm.github.io/>`_.
 * `Matplotlib <https://matplotlib.org/>`_.
 
-* `DVC <https://matplotlib.org/>`_ (for metafile-based version controlling of dataset and models in CI/CD).
+* `DVC <https://dvc.org/>`_ (for metafile-based version controlling of dataset and models in CI/CD).
 
 Dataset
 ------------
