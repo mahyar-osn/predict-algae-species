@@ -15,6 +15,8 @@ Requirements
 * `tqdm <https://tqdm.github.io/>`_.
 * `Matplotlib <https://matplotlib.org/>`_.
 
+* `DVC <https://matplotlib.org/>`_ (for metafile-based version controlling of dataset and models in CI/CD).
+
 Dataset
 ------------
 Dataset for this codebase are stored in a Google Drive folder. You can access it using this `link <https://drive.google.com/drive/folders/1-iU0YnifGsEuaKwUJbrxJktu0DLn8rFH?usp=sharing>`_.
@@ -105,6 +107,10 @@ Since our models are now saved in the Google Drive directory, we can simply run 
    :align: center
 
 |
+
+A simple CI/CD workflow
+------------
+
 
 Limitations
 ------------
