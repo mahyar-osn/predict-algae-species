@@ -1,0 +1,20 @@
+{
+  "ROOT" : "../../tests/resources",
+  "IMAGE_DATASET_PATH" : "tiles",
+  "MASK_DATASET_PATH" : "annotations",
+  "ALGAE_SPECIES": ["Pp", "Cr", "Cv"],
+  "TEST_SPLIT" : 0.2,
+  "NUM_CHANNELS" : 1,
+  "NUM_CLASSES" : 1,
+  "NUM_LEVELS" : 3,
+  "INIT_LR" : 0.001,
+  "NUM_EPOCHS" : 40,
+  "BATCH_SIZE" : 16,
+  "INPUT_IMAGE_WIDTH" : 512,
+  "INPUT_IMAGE_HEIGHT" : 512,
+  "THRESHOLD" : 0.5,
+  "PATIENCE" : 5,
+  "BASE_OUTPUT" : "output",
+  "MODEL_PATH" : "unet.ptm",
+  "TEST_PATHS" : "test_paths.txt"
+}
