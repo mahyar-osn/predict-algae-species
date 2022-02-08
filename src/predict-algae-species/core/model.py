@@ -1,4 +1,4 @@
-import config
+from core import config
 
 from torch.nn import ConvTranspose2d
 from torch.nn import Conv2d
