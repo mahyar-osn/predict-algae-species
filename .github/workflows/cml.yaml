@@ -11,3 +11,15 @@ jobs:
         run: |
           pip install -r requirements.txt
           python src/predict-algae-species/train.py
+
+          echo "### Model Metrics" > report.md
+          cat metrics.txt >> report.md
+
+          echo ##\n Model Performance"
+          echo "Model performance metrics can be seen on the plots below." >> report.md
+
+          cml-publish Pp_model_results.png --md >> report.md
+          cml-publish Cr_model_results.png --md >> report.md
+          cml-publish Cv_model_results.png --md >> report.md
+
+          cml-send-comment report.md
