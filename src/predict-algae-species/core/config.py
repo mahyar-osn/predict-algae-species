@@ -6,7 +6,7 @@ import torch
 import os
 
 """ base path of the dataset """
-ROOT = '/content/drive/Shared with me/algae-dataset'
+ROOT = '/content/drive/MyDrive/algae-dataset'
 
 """ define the path to the tiles and annotations dataset """
 IMAGE_DATASET_PATH = os.path.join(ROOT, "tiles")
